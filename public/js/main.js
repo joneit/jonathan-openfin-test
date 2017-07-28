@@ -63,9 +63,37 @@
             //update UI and set event handlers.
             updateAdapterIndicator();
             setVersionNumber();
-            setLearnMoreEventHandler();
+            // setLearnMoreEventHandler();
             setTestEventHandler();
             subscribeToInterAppBus();
+
+            var link = document.querySelector('#test');
+            link.addEventListener('click', function() {
+                var childApp = new fin.desktop.Application({
+                    uuid: 'crashapp',
+                    name: 'crashapp',
+                    url: link.innerHTML,
+                    autoShow: true
+                }, function(successObj) {
+                    console.log('new app ACK:', JSON.stringify(successObj));
+
+                    childApp.addEventListener('crashed', function(event) {
+                        console.log('app: crashed', event);
+                    });
+
+                    childApp.addEventListener('window-crashed', function(event) {
+                        console.log('app: window-crashed', event);
+                    });
+
+                    childApp.run(function(successObj) {
+                        console.log('run ACK');
+                    }, function(reason, error) {
+                        alert('run NACK');
+                    });
+                }, function(reason, error) {
+                    alert('new app NACK:', reason);
+                });
+            });
         });
     });
 }());
