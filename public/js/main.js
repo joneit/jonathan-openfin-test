@@ -69,29 +69,26 @@
 
             var link = document.querySelector('#test');
             link.addEventListener('click', function() {
-                var childApp = new fin.desktop.Application({
-                    uuid: 'crashapp',
-                    name: 'crashapp',
+                var childWin = new fin.desktop.Window({
+                    name: 'childWindow',
                     url: link.innerHTML,
                     autoShow: true
                 }, function(successObj) {
-                    console.log('new app ACK:', JSON.stringify(successObj));
+                    console.log('new win ACK:', JSON.stringify(successObj));
 
-                    childApp.addEventListener('crashed', function(event) {
+                    childWin.addEventListener('crashed', function(event) {
+                        console.log('window: crashed', event);
+                    });
+
+                    var app = fin.desktop.Application.getCurrent();
+                    app.addEventListener('crashed', function(event) {
                         console.log('app: crashed', event);
                     });
-
-                    childApp.addEventListener('window-crashed', function(event) {
+                    app.addEventListener('window-crashed', function(event) {
                         console.log('app: window-crashed', event);
                     });
-
-                    childApp.run(function(successObj) {
-                        console.log('run ACK');
-                    }, function(reason, error) {
-                        alert('run NACK');
-                    });
                 }, function(reason, error) {
-                    alert('new app NACK:', reason);
+                    alert('new win NACK:', reason);
                 });
             });
         });
