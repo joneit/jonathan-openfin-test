@@ -56,6 +56,29 @@
         });
     };
 
+    //add the event listener for the Test button.
+    var openChildWindow = function(n, callback) {
+        var win = new fin.desktop.Window({
+            name: "childWindow" + n,
+            // url: "child.html",
+            defaultWidth: 320,
+            defaultHeight: 320,
+            defaultTop: 190 + 10 * n,
+            defaultLeft: 290 + 10 * n,
+            frame: true,
+            resizable: true,
+            autoShow: true,
+            state: "normal"
+        }, function() {
+            win.getNativeWindow().document.body.innerText = "The window has successfully been created.";
+            callback(win, n);
+        }, function(error) {
+            console.log("Error creating window:", error);
+        });
+        console.log('BEFORE', JSON.stringify(win, undefined, 2));
+        return win;
+    };
+
     //event listeners.
     document.addEventListener('DOMContentLoaded', function() {
         //OpenFin is ready
@@ -66,6 +89,25 @@
             setLearnMoreEventHandler();
             setTestEventHandler();
             subscribeToInterAppBus();
+
+            var parentWindow = fin.desktop.Window.getCurrent();
+            parentWindow.focus();
+            parentWindow.getNativeWindow().document.addEventListener('click', function() {
+                parentWindow.focus();
+            });
+
+            var n = 0;
+            var interval = setInterval(function() {
+                n += 1;
+                if (n <= 3) {
+                    openChildWindow(n, function(win) {
+                        console.log('AFTER', win);
+                    });
+
+                } else {
+                    clearInterval(interval);
+                }
+            }, 2000);
         });
     });
-}());
+})();

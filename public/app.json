@@ -1,21 +1,21 @@
 {
     "devtools_port": 9090,
     "startup_app": {
-        "name": "ofin",
         "url": "http://localhost:5001/index.html",
         "uuid": "ofin",
         "applicationIcon": "http://localhost:5001/favicon.ico",
         "autoShow": true,
+        "frame": true,
+        "resizable": true,
         "permissions": {
             "System": {
                 "getMousePosition": false
             }
-        },
-        "resizable": false
+        }
     },
     "runtime": {
         "arguments": "--v=1 --enable-logging --debug --enable-strict-api-permissions",
-        "version": "6.49.21.10"
+        "version": "7.53.23.8"
     },
     "shortcut": {
         "company": "OpenFin",
