@@ -15,7 +15,7 @@
     },
     "runtime": {
         "arguments": "--v=1 --enable-logging --debug --enable-strict-api-permissions",
-        "version": "7.53.23.8"
+        "version": "7.53.23.23"
     },
     "shortcut": {
         "company": "OpenFin",

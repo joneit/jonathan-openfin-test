@@ -57,20 +57,24 @@
     };
 
     //add the event listener for the Test button.
-    var openChildWindow = function(n, callback) {
+    var openChildWindow = function(n, color, rect, callback) {
         var win = new fin.desktop.Window({
             name: "childWindow" + n,
-            // url: "child.html",
-            defaultWidth: 320,
-            defaultHeight: 320,
-            defaultTop: 190 + 10 * n,
-            defaultLeft: 290 + 10 * n,
             frame: true,
             resizable: true,
             autoShow: true,
             state: "normal"
         }, function() {
-            win.getNativeWindow().document.body.innerText = "The window has successfully been created.";
+            var document = win.getNativeWindow().document,
+                pre = document.createElement('pre'),
+                style = pre.style;
+            style.backgroundColor = color;
+            style.margin = '8px';
+            style.position = 'absolute';
+            style.top = style.left = style.right = style.bottom = '0';
+            pre.innerText = JSON.stringify(rect, undefined, 4);
+            document.body.style.backgroundColor = 'red';
+            document.body.appendChild(pre);
             callback(win, n);
         }, function(error) {
             console.log("Error creating window:", error);
@@ -96,18 +100,43 @@
                 parentWindow.focus();
             });
 
-            var n = 0;
-            var interval = setInterval(function() {
-                n += 1;
-                if (n <= 3) {
-                    openChildWindow(n, function(win) {
-                        console.log('AFTER', win);
-                    });
+            var n = 0,
+                colors = ['#fdd', '#dfd', '#ddf'],
+                interval, rects, majorVersionNumber;
 
+            fin.desktop.System.getMonitorInfo(info => {
+                rects = [addWidthHeight(info.primaryMonitor)]
+                    .concat(info.nonPrimaryMonitors.map(monitor => addWidthHeight(monitor)));
+                interval = setInterval(child, 2000);
+            });
+
+            fin.desktop.Application.getCurrent().getManifest(manifest => {
+                majorVersionNumber = Number(manifest.runtime.version.split('.')[0]);
+            });
+
+            function child() {
+                var rect = rects[n],
+                    color = colors[n];
+                n += 1;
+                if (n <= rects.length) {
+                    openChildWindow(n, color, rect, function(win) {
+                        console.log('AFTER', win);
+                        win.moveTo(rect.left, rect.top, () => {
+                            win.resizeTo(rect.width, rect.height);
+                        });
+                    });
                 } else {
                     clearInterval(interval);
                 }
-            }, 2000);
+            }
+
+            function addWidthHeight(monitorInfo) {
+                var rect = Object.assign({}, monitorInfo.monitorRect);
+                rect.width = rect.right - rect.left;
+                rect.height = rect.bottom - rect.top;
+                rect.monitorInfo = monitorInfo;
+                return rect;
+            }
         });
     });
 })();

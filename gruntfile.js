@@ -102,8 +102,8 @@ module.exports = function(grunt) {
                             }
                         },
                         runtime: {
-                            arguments: '--v=1 --enable-logging --debug --enable-strict-api-permissions',
-                            version: '7.53.23.8'
+                            // arguments: '--v=1 -enable-logging --debug --enable-strict-api-permissions',
+                            version: '8.56.24.14'
                         },
                         shortcut: {
                             icon: target + '/favicon.ico'
