@@ -14,7 +14,9 @@
     },
     "runtime": {
         "arguments": "--v=1 --enable-logging --debug",
-        "version": "7.53.23.3"
+        "version": "8.56.24.19",
+        "version53": "7.53.23.23",
+        "version49": "6.49.21.24"
     },
     "shortcut": {
         "company": "OpenFin",

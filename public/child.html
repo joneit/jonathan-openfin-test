@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Child Window</title>
+
+    <style></style>
+
+    <script>
+function insertRule(n) {
+    var ss = document.styleSheets[0];
+    ss.insertRule(`
+@font-face {
+    font-family: 'Roboto';
+    src: url(http://localhost:5001/Roboto-bold.woff2?delay=50) format('woff2');
+}`, ss.cssRules.length);
+
+    console.log('insertRule ' + n);
+}
+document.fonts.ready.then(() => {
+    insertRule(2);
+});
+//fin.desktop.main(() => { // this calls insertRule(2) before insertRule(1)
+window.onload = function() { // this calls insertRule(1) and (2) in order
+    insertRule(1);
+};
+//});
+    </script>
+</head>
+
+<body>
+    <div style="font-family:Roboto;font-size: 5px;">Domo arigato, Mr. Roboto! (5px)</div>
+    <div style="font-family:Roboto;font-size: 6px;">Domo arigato, Mr. Roboto! (6px)</div>
+    <div style="font-family:Roboto;font-size: 7px;">Domo arigato, Mr. Roboto! (7px)</div>
+    <div style="font-family:Roboto;font-size: 8px;">Domo arigato, Mr. Roboto! (8px)</div>
+    <div style="font-family:Roboto;font-size: 9px;">Domo arigato, Mr. Roboto! (9px)</div>
+    <div style="font-family:Roboto;font-size: 10px;">Domo arigato, Mr. Roboto! (10px)</div>
+    <div style="font-family:Roboto;font-size: 11px;">Domo arigato, Mr. Roboto! (11px)</div>
+    <div style="font-family:Roboto;font-size: 12px;">Domo arigato, Mr. Roboto! (12px)</div>
+    <div style="font-family:Roboto;font-size: 13px;">Domo arigato, Mr. Roboto! (13px)</div>
+    <div style="font-family:Roboto;font-size: 14px;">Domo arigato, Mr. Roboto! (14px)</div>
+    <div style="font-family:Roboto;font-size: 15px;">Domo arigato, Mr. Roboto! (15px)</div>
+    <div style="font-family:Roboto;font-size: 16px;">Domo arigato, Mr. Roboto! (16px)</div>
+    <div style="font-family:Roboto;font-size: 17px;">Domo arigato, Mr. Roboto! (17px)</div>
+    <div style="font-family:Roboto;font-size: 18px;">Domo arigato, Mr. Roboto! (18px)</div>
+    <div style="font-family:Roboto;font-size: 19px;">Domo arigato, Mr. Roboto! (19px)</div>
+    <div style="font-family:Roboto;font-size: 20px;">Domo arigato, Mr. Roboto! (20px)</div>
+</body>
+
+</html>

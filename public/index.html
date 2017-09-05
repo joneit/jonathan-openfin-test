@@ -8,19 +8,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/main.css">
+    <style></style>
+    <script>
+function insertRule(n) {
+    var ss = document.styleSheets[0];
+    ss.insertRule(`
+    @font-face {
+        font-family: 'Roboto';
+        src: url(http://localhost:5001/Roboto-bold.woff2) format('woff2');
+    }`, ss.cssRules.length);
+
+    console.log('insertRule ' + n);
+}
+document.fonts.ready.then(() => {
+    //insertRule(2);
+});
+window.onload = function() { // this calls insertRule(1) and (2) in order
+    insertRule(1);
+}
+    </script>
 </head>
 <body>
   <div class="container">
     <div class="jumbotron">
       <div class="container">
         <div class="row">
-          <h1>Hello, world!</h1>
+          <h1 style="font-family:Roboto">Hello, world!</h1>
           <p>This is a template for an OpenFin application.</p>
           <p id="version-number-container" class="invisible">
             Current version: <span id="of-version"></span>
           </p>
             <p>
-                <a id="test" style="font-size:10pt; cursor:pointer" role="button">https://s3.amazonaws.com/testing-assets.openfin.co/test_runner/pages/crashme-button.html</a>
+                <a id="test" style="font-size:10pt; cursor:pointer" role="button">child.html</a>
             </p>
           <p >
             <div id="inter-app-messages" style="display:none;" class="alert alert-info">

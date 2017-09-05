@@ -1,5 +1,5 @@
-.DS_Store
-._.DS_Store
+.DS_*
+._.DS_*
 .idea
 node_modules
 dist
